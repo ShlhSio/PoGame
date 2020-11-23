@@ -1,6 +1,7 @@
 import pygame
-
+from world  import *
 from constants import *
+
 
 
 def create_screen(world):
@@ -53,7 +54,10 @@ def update_screen(screen, background, world, player):
             PLAYER_SIZE,
         ],
     )
-
+    for y in range(WORLD_WIDTH):
+        for x in range(WORLD_WIDTH):
+            get_index(x, y)
+            pygame
     # TODO en théorie, il faudrait utiliser les éléments du monde pour afficher d'autres choses sur notre écran ...
 
     pygame.display.flip()

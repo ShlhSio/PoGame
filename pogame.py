@@ -1,8 +1,7 @@
 import pygame
 
-from constants import *
 from screen import create_screen, update_screen
-from world import create_world
+from world import *
 
 
 def main():
@@ -14,6 +13,10 @@ def main():
     clock = pygame.time.Clock()
     # Coordonnées [x, y] du joueur
     player = [0, 0]
+    index = get_index(player[0], player[1])
+    inventory = []
+    print("sol :", world[index], "inventaire :", inventory)
+
 
     # Les variables qui nous permettent de savoir si notre programme est en cours d'exécution ou s'il doit se terminer.
     alive = True
@@ -22,12 +25,13 @@ def main():
     # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
     update_screen(screen, background, world, player)
     clock.tick()
-
     # Boucle "quasi" infinie, qui s'arrêtera si le joueur est mort, ou si l'arrêt du programme est demandé.
+
     while alive and running:
         # À chaque itération, on demande à pygame quels "évènements" se sont passés. Ces évènements sont l'interface
         # qui permet d'interragir avec l'extérieur du programme, et en particulier l'utilisateur (qui utilisera son
         # clavier, par exemple).
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 # L'utilisateur souhaite fermer la fenêtre ou quitter par un autre moyen (menus ...).
@@ -41,13 +45,40 @@ def main():
                     # À la prochaine itération de notre boucle principale, la condition sera fausse et le programme va
                     # se terminer.
                     running = False
+                elif event.key == pygame.K_LEFT:
+                    if player[0] > 0:
+                        player = (player[0] - 1, player[1])
+                elif event.key == pygame.K_RIGHT:
+                    if player[0] < WORLD_WIDTH - 1:
+                        player = (player[0] + 1, player[1])
+                elif event.key == pygame.K_UP:
+                    if player[1] > 0:
+                        player = (player[0], player[1] - 1)
+                elif event.key == pygame.K_DOWN:
+                    if player[1] < WORLD_HEIGHT - 1:
+                        player = (player[0], player[1] + 1)
+                elif event.key == pygame.K_e:
+                    if world[index]:
+                        transfer_item(world[index], inventory, world[index][0])
+                        print(f"You have taken {world[index][0]} ")
+                    else:
+                        print("il n'y a rien ici")
+                elif event.key == pygame.K_f:
+                    if world[index]:
+                        transfer_item(inventory, world[index], world[index][0])
+                        print(f"You put {inventory[0]} down ")
+                    else:
+                        print("il n'y a rien dans votre inventaire")
+
             elif event.type == pygame.KEYUP:
                 # Une touche du clavier a été relachée.
                 pass
 
-        # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
+            index = get_index(player[0], player[1])
+            print("sol :", world[index], "inventaire :", inventory)
         update_screen(screen, background, world, player)
         clock.tick()
+
 
 
 if __name__ == "__main__":
