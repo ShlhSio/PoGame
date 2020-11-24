@@ -1,7 +1,6 @@
 import pygame
 from world import *
 from constants import *
-from pogame import *
 
 
 
