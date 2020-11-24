@@ -1,5 +1,5 @@
 import pygame
-from world  import *
+from world import *
 from constants import *
 
 
@@ -42,7 +42,6 @@ def create_screen(world):
 def update_screen(screen, background, world, player):
     player_x, player_y = player
     screen.blit(background, (0, 0))
-
     # couleur (red, green, blue)
     pygame.draw.rect(
         screen,
@@ -54,10 +53,23 @@ def update_screen(screen, background, world, player):
             PLAYER_SIZE,
         ],
     )
+
     for y in range(WORLD_WIDTH):
         for x in range(WORLD_WIDTH):
-            get_index(x, y)
-            pygame
+            index = get_index(x, y)
+            objet_x, objet_y = (x, y)
+            pygame.draw.rect(
+                screen,
+                (124,250,92),
+                [
+                    objet_x * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
+                    objet_y * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
+                    PLAYER_SIZE,
+                    PLAYER_SIZE,
+                ],
+            )
+
+
     # TODO en théorie, il faudrait utiliser les éléments du monde pour afficher d'autres choses sur notre écran ...
 
     pygame.display.flip()

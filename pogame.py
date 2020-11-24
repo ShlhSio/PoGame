@@ -31,7 +31,7 @@ def main():
         # À chaque itération, on demande à pygame quels "évènements" se sont passés. Ces évènements sont l'interface
         # qui permet d'interragir avec l'extérieur du programme, et en particulier l'utilisateur (qui utilisera son
         # clavier, par exemple).
-
+        index = get_index(player[0], player[1])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 # L'utilisateur souhaite fermer la fenêtre ou quitter par un autre moyen (menus ...).
@@ -48,34 +48,44 @@ def main():
                 elif event.key == pygame.K_LEFT:
                     if player[0] > 0:
                         player = (player[0] - 1, player[1])
+                        index = get_index(player[0], player[1])
+                        print("sol :", world[index], "inventaire :", inventory)
                 elif event.key == pygame.K_RIGHT:
                     if player[0] < WORLD_WIDTH - 1:
                         player = (player[0] + 1, player[1])
+                        index = get_index(player[0], player[1])
+                        print("sol :", world[index], "inventaire :", inventory)
                 elif event.key == pygame.K_UP:
                     if player[1] > 0:
                         player = (player[0], player[1] - 1)
+                        index = get_index(player[0], player[1])
+                        print("sol :", world[index], "inventaire :", inventory)
                 elif event.key == pygame.K_DOWN:
                     if player[1] < WORLD_HEIGHT - 1:
                         player = (player[0], player[1] + 1)
+                        index = get_index(player[0], player[1])
+                        print("sol :", world[index], "inventaire :", inventory)
                 elif event.key == pygame.K_e:
-                    if world[index]:
-                        transfer_item(world[index], inventory, world[index][0])
-                        print(f"You have taken {world[index][0]} ")
-                    else:
+                    if not world[index]:
                         print("il n'y a rien ici")
-                elif event.key == pygame.K_f:
-                    if world[index]:
-                        transfer_item(inventory, world[index], world[index][0])
-                        print(f"You put {inventory[0]} down ")
                     else:
+                        print(f"You have taken {world[index][0]} ")
+                        transfer_item(world[index], inventory, world[index][0])
+                        print("sol :", world[index], "inventaire :", inventory)
+
+                elif event.key == pygame.K_f:
+                    if not inventory:
                         print("il n'y a rien dans votre inventaire")
+                    else:
+                        print(f"You put {inventory[0]} down ")
+                        transfer_item(inventory, world[index], inventory[0])
+                        print("sol :", world[index], "inventaire :", inventory)
 
             elif event.type == pygame.KEYUP:
                 # Une touche du clavier a été relachée.
                 pass
 
-            index = get_index(player[0], player[1])
-            print("sol :", world[index], "inventaire :", inventory)
+
         update_screen(screen, background, world, player)
         clock.tick()
 

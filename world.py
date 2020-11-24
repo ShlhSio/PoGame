@@ -4,7 +4,6 @@ from constants import *
 
 
 def create_world():
-    available_items = ["morgenstern", "bouclier", "pilum", "orange", "casque", "bottes"]
     world = []
     for y in range(WORLD_HEIGHT):
         for x in range(WORLD_WIDTH):
@@ -17,14 +16,29 @@ def create_world():
 
 
 def transfer_item(source, target, item):
-    if item in source:
-        source.remove(item)
-        target.append(item)
+    source.remove(item)
+    target.append(item)
     return source, target
 
 
 def get_index(x, y):
     return y * WORLD_WIDTH + x
 
+
+def item_color(item):
+    if item == available_items[0]:
+        color = (255,156,156)
+    elif item == available_items[1]:
+        color = (255,172,64)
+    elif item == available_items[2]:
+        color = (255,115,152)
+    elif item == available_items[3]:
+        color = (194,28,255)
+    elif item == available_items[4]:
+        color = (124,255,92)
+    elif item == available_items[5]:
+        color = (198,255,10)
+
+    return color
 
 
