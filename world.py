@@ -18,8 +18,11 @@ def create_world():
 
 
 def transfer_item(source, target, item):
-    source.remove(item)
-    target.append(item)
+    if item in source:
+        source.remove(item)
+        target.append(item)
+    else:
+        pass
     return source, target
 
 

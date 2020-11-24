@@ -8,7 +8,7 @@ def create_screen(world):
     # Initialise screen
     pygame.init()
     board_width = WORLD_WIDTH * ROOM_SIZE
-    board_height = WORLD_HEIGHT * ROOM_SIZE
+    board_height = WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE*8
     screen = pygame.display.set_mode((board_width, board_height))
     pygame.display.set_caption("SciencesPo Game")
 
@@ -39,7 +39,7 @@ def create_screen(world):
     return screen, background
 
 
-def update_screen(screen, background, world, player):
+def update_screen(screen, background, world, player, inventory):
     player_x, player_y = player
     screen.blit(background, (0, 0))
     # couleur (red, green, blue)
@@ -117,7 +117,21 @@ def update_screen(screen, background, world, player):
                             ITEM_SIZE,
                         ],
                     )
-                
+    #affichage de l'inventaire
+    x = 10
+    rang = 0
+    for item in inventory:
+
+        y = WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE * 4
+        color = item_color(inventory[rang])
+        pygame.draw.circle(
+            screen,
+            color,
+            (x, y),
+            ITEM_SIZE,
+        )
+        x += ITEM_SIZE*3
+        rang +=1
 
 
     # TODO en théorie, il faudrait utiliser les éléments du monde pour afficher d'autres choses sur notre écran ...

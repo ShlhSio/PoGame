@@ -23,7 +23,7 @@ def main():
     running = True
 
     # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
-    update_screen(screen, background, world, player)
+    update_screen(screen, background, world, player, inventory)
     clock.tick()
     # Boucle "quasi" infinie, qui s'arrêtera si le joueur est mort, ou si l'arrêt du programme est demandé.
 
@@ -85,7 +85,7 @@ def main():
                 # Une touche du clavier a été relachée.
                 pass
 
-        update_screen(screen, background, world, player)
+        update_screen(screen, background, world, player, inventory)
         clock.tick()
 
 
