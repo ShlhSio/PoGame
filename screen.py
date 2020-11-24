@@ -1,7 +1,6 @@
 import pygame
 from world import *
 from constants import *
-from pogame import *
 
 
 
@@ -55,23 +54,70 @@ def update_screen(screen, background, world, player):
         ],
     )
 
-    for y in range(WORLD_WIDTH):
+    for y in range(WORLD_HEIGHT):
         for x in range(WORLD_WIDTH):
             index = get_index(x, y)
             objet_x, objet_y = (x, y)
-            color = item_color(world[index][0])
-            pygame.draw.rect(
-                screen,
-                color,
-                # je n'ai pas eu le temps de le faire pour chaque objet donc j'ai testé l'affichage au hasard.
-                # j'ai aussi écrit une fonction qui donne la couleur de l'objet en fonction de sa place dans la liste des items disponibles pour la création du monde.
-                [
-                    objet_x * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
-                    objet_y * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
-                    ITEM_SIZE,
-                    ITEM_SIZE,
-                ],
-            )
+            if not world[index]:
+                pass
+            else:
+                color = item_color(world[index][0])
+                pygame.draw.rect(
+                    screen,
+                    color,
+                    [
+                        objet_x * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 4,
+                        objet_y * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 4,
+                        ITEM_SIZE,
+                        ITEM_SIZE,
+                    ],
+                )
+                if len(world[index]) < 2:
+                    pass
+                else:
+                    color = item_color(world[index][1])
+
+                    pygame.draw.rect(
+                        screen,
+                        color,
+                        [
+                            objet_x * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 2,
+                            objet_y * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 4,
+                            ITEM_SIZE,
+                            ITEM_SIZE,
+                        ],
+                    )
+                if len(world[index]) < 3:
+                    pass
+                else:
+                    color = item_color(world[index][2])
+
+                    pygame.draw.rect(
+                        screen,
+                        color,
+                        [
+                            objet_x * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 1.25,
+                            objet_y * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 4,
+                            ITEM_SIZE,
+                            ITEM_SIZE,
+                        ],
+                    )
+                if len(world[index]) < 4:
+                    pass
+                else:
+                    color = item_color(world[index][3])
+
+                    pygame.draw.rect(
+                        screen,
+                        color,
+                        [
+                            objet_x * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 1,
+                            objet_y * ROOM_SIZE + (ROOM_SIZE - ITEM_SIZE) / 4,
+                            ITEM_SIZE,
+                            ITEM_SIZE,
+                        ],
+                    )
+                
 
 
     # TODO en théorie, il faudrait utiliser les éléments du monde pour afficher d'autres choses sur notre écran ...
