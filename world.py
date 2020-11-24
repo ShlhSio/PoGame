@@ -7,8 +7,10 @@ def create_world():
     world = []
     for y in range(WORLD_HEIGHT):
         for x in range(WORLD_WIDTH):
+            world.append([])
             index = get_index(x, y)
-            world.insert(index, random.choices(available_items, k=3))
+            if random.randint(0,5) == 0 and (x or y):
+                world.insert(index, random.choices(available_items, k=random.randint(1,3)))
         print()
     # TODO Il faut remplir notre terrain ici, en fonction de la taille choisie préalablement.
 
@@ -23,6 +25,10 @@ def transfer_item(source, target, item):
 
 def get_index(x, y):
     return y * WORLD_WIDTH + x
+
+
+def get_room(world, x, y):
+    return world[get_index(x, y)]
 
 
 def item_color(item):
