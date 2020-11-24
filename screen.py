@@ -1,6 +1,7 @@
 import pygame
 from world import *
 from constants import *
+from pogame import *
 
 
 
@@ -58,16 +59,17 @@ def update_screen(screen, background, world, player):
         for x in range(WORLD_WIDTH):
             index = get_index(x, y)
             objet_x, objet_y = (x, y)
+            color = item_color(world[index][0])
             pygame.draw.rect(
                 screen,
-                (124,250,92),
+                color,
                 # je n'ai pas eu le temps de le faire pour chaque objet donc j'ai testé l'affichage au hasard.
                 # j'ai aussi écrit une fonction qui donne la couleur de l'objet en fonction de sa place dans la liste des items disponibles pour la création du monde.
                 [
                     objet_x * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
                     objet_y * ROOM_SIZE + (ROOM_SIZE - PLAYER_SIZE) / 4,
-                    PLAYER_SIZE,
-                    PLAYER_SIZE,
+                    ITEM_SIZE,
+                    ITEM_SIZE,
                 ],
             )
 

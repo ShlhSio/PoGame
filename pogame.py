@@ -85,10 +85,8 @@ def main():
                 # Une touche du clavier a été relachée.
                 pass
 
-
         update_screen(screen, background, world, player)
         clock.tick()
-
 
 
 if __name__ == "__main__":

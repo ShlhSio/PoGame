@@ -3,4 +3,5 @@ WORLD_WIDTH = 16
 WORLD_HEIGHT = 12
 ROOM_SIZE = 54
 PLAYER_SIZE = 16
+ITEM_SIZE = 5
 available_items = ["morgenstern", "bouclier", "pilum", "orange", "casque", "bottes"]

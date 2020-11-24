@@ -38,7 +38,8 @@ def item_color(item):
         color = (124,255,92)
     elif item == available_items[5]:
         color = (198,255,10)
-
-    return color
+    else:
+        color = (0, 0, 0)
+    return (color)
 
 
