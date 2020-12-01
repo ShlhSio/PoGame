@@ -1,40 +1,23 @@
 import pygame
+from objets import *
 from world import *
 from constants import *
-
 
 
 def create_screen(world):
     # Initialise screen
     pygame.init()
     board_width = WORLD_WIDTH * ROOM_SIZE
-    board_height = WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE*8
+    board_height = WORLD_HEIGHT * ROOM_SIZE
     screen = pygame.display.set_mode((board_width, board_height))
-    pygame.display.set_caption("SciencesPo Game")
+    pygame.display.set_caption("Infiltrator Game")
 
     # Fill background
-    background = pygame.Surface(screen.get_size())
-    background = background.convert()
-    background.fill((255, 255, 255))
-
-    for x in range(WORLD_WIDTH):
-        for y in range(WORLD_HEIGHT):
-            if bool(x % 2) == bool(y % 2):
-
-                color = (200, 200, 200)
-            else:
-                color = (250, 250, 250)
-
-            pygame.draw.rect(
-                background,
-                color,
-                [
-                    x * ROOM_SIZE,
-                    y * ROOM_SIZE,
-                    ROOM_SIZE,
-                    ROOM_SIZE,
-                ],
-            )
+    background = pygame.image.load('images/pogame_background.jpg')
+    background = pygame.transform.scale(background, (board_width, board_height))
+    rect = background.get_rect()
+    rect = rect.move((0, 0))
+    screen.blit(background, rect)
 
     return screen, background
 
@@ -117,11 +100,10 @@ def update_screen(screen, background, world, player, inventory):
                             ITEM_SIZE,
                         ],
                     )
-    #affichage de l'inventaire
+    # affichage de l'inventaire
     x = 10
     rang = 0
     for item in inventory:
-
         y = WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE * 4
         color = item_color(inventory[rang])
         pygame.draw.circle(
@@ -131,9 +113,6 @@ def update_screen(screen, background, world, player, inventory):
             ITEM_SIZE,
         )
         x += ITEM_SIZE*3
-        rang +=1
-
-
-    # TODO en théorie, il faudrait utiliser les éléments du monde pour afficher d'autres choses sur notre écran ...
+        rang += 1
 
     pygame.display.flip()
