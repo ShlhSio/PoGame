@@ -1,28 +1,37 @@
-import pygame
 from objets import *
 from world import *
 from constants import *
 
-
+pygame.init()
 def create_screen(world):
     # Initialise screen
-    pygame.init()
+
     board_width = WORLD_WIDTH * ROOM_SIZE
-    board_height = WORLD_HEIGHT * ROOM_SIZE
+    board_height = WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE*8
     screen = pygame.display.set_mode((board_width, board_height))
     pygame.display.set_caption("Infiltrator Game")
 
-    # Fill background
-    background = pygame.image.load('images/pogame_background.jpg')
-    background = pygame.transform.scale(background, (board_width, board_height))
-    rect = background.get_rect()
-    rect = rect.move((0, 0))
-    screen.blit(background, rect)
+    # Fill background with white
+    background = pygame.Surface(screen.get_size())
+    background = background.convert()
+    background.fill((255, 255, 255))
+
+   #blit my layer
+    layer = pygame.image.load('images/pogame_background.jpg')
+    layer = pygame.transform.scale(layer, (WORLD_WIDTH*ROOM_SIZE, WORLD_HEIGHT*ROOM_SIZE))
+    background.blit(layer, (0, 0, WORLD_HEIGHT*ROOM_SIZE, WORLD_WIDTH*ROOM_SIZE))
+
+
+    #background = pygame.transform.scale(background, (board_width, board_height))
+    #rect = background.get_rect()
+    #rect = rect.move((0, 0))
+    #screen.blit(background, rect)
 
     return screen, background
 
 
 def update_screen(screen, background, world, player, inventory):
+
     player_x, player_y = player
     screen.blit(background, (0, 0))
     # couleur (red, green, blue)

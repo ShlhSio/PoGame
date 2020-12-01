@@ -13,7 +13,7 @@ def create_world():
                 world.insert(index, random.choices(available_items, k=random.randint(1,3)))
         print()
 
-    index_win = get_index(random.randint(2,16),random.randint(2, 12))
+    index_win = get_index(random.randint(2, WORLD_WIDTH-1), random.randint(2, WORLD_HEIGHT-1))
     world[index_win].clear()
     world[index_win].insert(0, datadisc)
 
@@ -32,7 +32,7 @@ def transfer_item(source, target, item):
 
 
 def get_index(x, y):
-    return y * WORLD_WIDTH + x
+    return y * WORLD_HEIGHT + x
 
 
 def get_room(world, x, y):
