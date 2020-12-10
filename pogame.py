@@ -1,73 +1,73 @@
-import pygame
-
 from screen import *
+import pygame
 
 
 def main():
     alive = True
     running = True
     fps = 30
+    background_change = 1
 
     while alive and running:
         # Création du "monde" tel que nous le définissons
-        world = create_world()
+        world, portal = create_world()
         # Création des surfaces de dessin
         screen, background = create_screen(world)
+
+        if background_change > 5:
+            background_change = 1
         # Création d'une horloge
         clock = pygame.time.Clock()
-        # Coordonnées [x, y] du joueur
+        # Initalisation du joueur
         player = [0, 0]
-        index = get_index(player[0], player[1])
         inventory = []
-        update_screen(screen, background, world, player, inventory)
+        index = get_index(player[0], player[1])
+
+        # initialisation des tourelles
+        turret1 = Turret()
+        turret2 = Turret()
+        turret3 = Turret()
+
+
+        update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3)
         clock.tick(fps)
         quitter = False
 
         # Une boucle qui relance le jeu à chaque fois que le joueur récupère le datadisc
         while not quitter:
             # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
-            update_screen(screen, background, world, player, inventory)
+            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3)
             clock.tick(fps)
-
-            # À chaque itération, on demande à pygame quels "évènements" se sont passés. Ces évènements sont l'interface
-            # qui permet d'interragir avec l'extérieur du programme, et en particulier l'utilisateur (qui utilisera son
-            # clavier, par exemple).
-            index = get_index(player[0], player[1])
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    # L'utilisateur souhaite fermer la fenêtre ou quitter par un autre moyen (menus ...).
-                    # À la prochaine itération de notre boucle principale, la condition sera fausse et le programme va se
-                    # terminer.
                     running = False
                     quitter = True
+
                 elif event.type == pygame.KEYDOWN:
-                    # Une touche du clavier a été pressée.
-                    if event.key == pygame.K_q:
-                        # L'utilisateur a appuyé sur "Q", pour Quitter.
-                        # À la prochaine itération de notre boucle principale, la condition sera fausse et le programme
-                        # va se terminer.
-                        running = False
-                        quitter = True
-                    elif event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_q:
                         if player[0] > 0:
                             player = (player[0] - 1, player[1])
                             index = get_index(player[0], player[1])
                             print("sol :", world[index], "inventaire :", inventory)
-                    elif event.key == pygame.K_RIGHT:
+
+                    elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         if player[0] < WORLD_WIDTH - 1:
                             player = (player[0] + 1, player[1])
                             index = get_index(player[0], player[1])
                             print("sol :", world[index], "inventaire :", inventory)
-                    elif event.key == pygame.K_UP:
+
+                    elif event.key == pygame.K_UP or event.key == pygame.K_z:
                         if player[1] > 0:
                             player = (player[0], player[1] - 1)
                             index = get_index(player[0], player[1])
                             print("sol :", world[index], "inventaire :", inventory)
-                    elif event.key == pygame.K_DOWN:
+
+                    elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         if player[1] < WORLD_HEIGHT - 1:
                             player = (player[0], player[1] + 1)
                             index = get_index(player[0], player[1])
                             print("sol :", world[index], "inventaire :", inventory)
+
                     elif event.key == pygame.K_e:
                         if not world[index]:
                             print("il n'y a rien ici")
@@ -88,11 +88,23 @@ def main():
                     # Une touche du clavier a été relachée.
                     pass
 
-            if datadisc in inventory:
+            # action des tourelles
+            index = get_index(player[0], player[1])
+            if invisibility_cloak not in inventory:
+                if index in turret1.range:
+                    break
+                elif index in turret2.range:
+                    break
+                elif index in turret3.range:
+                    break
+            else:
+                pass
 
+            if portail in inventory:
+                background_change += 1
                 break
 
-            update_screen(screen, background, world, player, inventory)
+            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3)
             clock.tick(fps)
 
 
@@ -101,6 +113,8 @@ if __name__ == "__main__":
         main()
     finally:
         pygame.quit()
+
+
 
 
 
