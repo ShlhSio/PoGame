@@ -75,14 +75,6 @@ class Turret:
                       self.index + WORLD_HEIGHT, self.index + WORLD_HEIGHT * 2, self.index + WORLD_HEIGHT * 3]
 
 
-# pour le passage à un jeu entièrement en POO, il faut créer un objet Portal et un objet Cloak, il faudra aussi changer
-# les actions et l'inventaire, c'est à dire abandonner create_world sous sa forme actuelle
-class Portal:
-
-    def __init__(self):
-        self.x = random.randint(5, WORLD_WIDTH - 1)
-        self.y = random.randint(5, WORLD_HEIGHT - 1)
-        self.index = get_index(self.x, self.y)
 
 
 

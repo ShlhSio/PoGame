@@ -5,7 +5,7 @@ import os
 
 
 pygame.init()
-myfont = pygame.font.SysFont('Comic Sans MS', 30)
+myfont = pygame.font.SysFont('calibri', 20)
 
 def create_screen(world):
     # Initialise screen
@@ -23,19 +23,14 @@ def create_screen(world):
     return screen, background
 
 
-def update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count):
+def update_screen(screen, background, background_change, world, inventory, portal, turret1, turret2, turret3, win_count, player):
 
     # ajout du fond, le but est qu'il change à chaque nouvelle création
     layer = pygame.image.load(os.path.join('images', 'fond' + str(background_change) + '.jpg'))
     layer = pygame.transform.scale(layer, (WORLD_WIDTH * ROOM_SIZE, WORLD_HEIGHT * ROOM_SIZE))
     background.blit(layer, (0, 0, WORLD_HEIGHT * ROOM_SIZE, WORLD_WIDTH * ROOM_SIZE))
-
-    # affichage du joueur
-    player_sprite = pygame.image.load('images/thief.png')
-    player_sprite = pygame.transform.scale(player_sprite, (ROOM_SIZE, ROOM_SIZE))
-    player_x, player_y = player
     screen.blit(background, (0, 0))
-    screen.blit(player_sprite, (player_x * ROOM_SIZE, player_y * ROOM_SIZE))
+
 
     # affichage du portail
     win_x, win_y = portal
@@ -95,8 +90,16 @@ def update_screen(screen, background, background_change, world, player, inventor
         rang += 1
 
     #affichage des pièces d'or
-    textsurface = myfont.render('You have ' + str(win_count) + ' gold coins', False, (0, 0, 0))
-    screen.blit(textsurface, (0, 0))
+    textsurface = myfont.render('You stole a total of ' + str(win_count) + ' /20 gold coins', False, (0, 0, 0))
+    textsurface2 = myfont.render('You have ' + str(5 - background_change) + ' screens left', False, (0, 0, 0))
+    screen.blit(textsurface, (0, WORLD_HEIGHT*ROOM_SIZE+ITEM_SIZE*2/3*8))
+    screen.blit(textsurface2, (WORLD_WIDTH*ROOM_SIZE*0.7, WORLD_HEIGHT * ROOM_SIZE+ITEM_SIZE*5.3))
+
+    # affichage du joueur
+    player_sprite = pygame.image.load('images/thief.png')
+    player_sprite = pygame.transform.scale(player_sprite, (ROOM_SIZE, ROOM_SIZE))
+    player_x, player_y = player
+    screen.blit(player_sprite, (player_x * ROOM_SIZE, player_y * ROOM_SIZE))
 
     pygame.display.flip()
 

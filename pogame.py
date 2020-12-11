@@ -1,6 +1,6 @@
 from screen import *
 import pygame
-
+import math
 
 
 
@@ -36,17 +36,17 @@ def main():
         # condition de victoire
         win_count += gold_count
 
-        if win_count > 5:
+        if win_count > 20:
             break
 
-        update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
+        update_screen(screen, background, background_change, world, inventory, portal, turret1, turret2, turret3, win_count, player)
         clock.tick(fps)
         quitter = False
 
         # Une boucle qui relance le jeu à chaque fois que le joueur récupère le datadisc
         while not quitter:
             # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
-            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
+            update_screen(screen, background, background_change, world, inventory, portal, turret1, turret2, turret3, win_count, player)
             clock.tick(fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -100,12 +100,13 @@ def main():
 
             # action des tourelles
             index = get_index(player[0], player[1])
+
             if invisibility_cloak not in inventory:
-                if index in turret1.range:
-                    break
-                elif index in turret2.range:
-                    break
-                elif index in turret3.range:
+                distance1 = math.sqrt(pow((turret1.x - player[0]), 2) + pow((turret1.y - player[1]), 2))
+                distance2 = math.sqrt(pow((turret2.x - player[0]), 2) + pow((turret2.y - player[1]), 2))
+                distance3 = math.sqrt(pow((turret3.x - player[0]), 2) + pow((turret3.y - player[1]), 2))
+
+                if distance1 < 3 or distance2 < 3 or distance3 < 3:
                     break
             else:
                 pass
@@ -118,7 +119,7 @@ def main():
                 background_change += 1
                 break
 
-            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
+            update_screen(screen, background, background_change, world, inventory, portal, turret1, turret2, turret3, win_count, player)
             clock.tick(fps)
 
 
