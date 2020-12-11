@@ -2,11 +2,16 @@ from screen import *
 import pygame
 
 
+
+
 def main():
     alive = True
     running = True
     fps = 30
     background_change = 1
+    gold_count = 0
+    win_count = 0
+
 
     while alive and running:
         # Création du "monde" tel que nous le définissons
@@ -15,7 +20,7 @@ def main():
         screen, background = create_screen(world)
 
         if background_change > 5:
-            background_change = 1
+            break
         # Création d'une horloge
         clock = pygame.time.Clock()
         # Initalisation du joueur
@@ -28,15 +33,20 @@ def main():
         turret2 = Turret()
         turret3 = Turret()
 
+        # condition de victoire
+        win_count += gold_count
 
-        update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3)
+        if win_count > 5:
+            break
+
+        update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
         clock.tick(fps)
         quitter = False
 
         # Une boucle qui relance le jeu à chaque fois que le joueur récupère le datadisc
         while not quitter:
             # On met à jour ce qu'on affiche sur l'écran, et on "pousse" l'aiguille de l'horloge d'un pas.
-            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3)
+            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
             clock.tick(fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -100,11 +110,15 @@ def main():
             else:
                 pass
 
+            gold_count = inventory.count("gold")
+
+
+            # changement de décor
             if portail in inventory:
                 background_change += 1
                 break
 
-            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3)
+            update_screen(screen, background,background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count)
             clock.tick(fps)
 
 

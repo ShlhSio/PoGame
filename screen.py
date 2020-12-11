@@ -2,10 +2,10 @@ import pygame
 from world import *
 from constants import *
 import os
-import sys
+
 
 pygame.init()
-
+myfont = pygame.font.SysFont('Comic Sans MS', 30)
 
 def create_screen(world):
     # Initialise screen
@@ -23,7 +23,7 @@ def create_screen(world):
     return screen, background
 
 
-def update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3):
+def update_screen(screen, background, background_change, world, player, inventory, portal, turret1, turret2, turret3, win_count):
 
     # ajout du fond, le but est qu'il change à chaque nouvelle création
     layer = pygame.image.load(os.path.join('images', 'fond' + str(background_change) + '.jpg'))
@@ -93,6 +93,10 @@ def update_screen(screen, background, background_change, world, player, inventor
         )
         x += ITEM_SIZE*3
         rang += 1
+
+    #affichage des pièces d'or
+    textsurface = myfont.render('You have ' + str(win_count) + ' gold coins', False, (0, 0, 0))
+    screen.blit(textsurface, (0, 0))
 
     pygame.display.flip()
 

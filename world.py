@@ -8,7 +8,7 @@ def create_world():
         for x in range(WORLD_HEIGHT):
             world.append([])
             index = get_index(x, y)
-            if random.randint(0, 5) == 0 and (x or y):
+            if random.randint(0, 20) == 0 and (x or y):
                 world[index].insert(0, gold)
             else:
                 pass
@@ -55,7 +55,7 @@ def item_color(item):
     elif item == gold:
         color = (255, 215, 0)
     elif item == invisibility_cloak:
-        color = (124, 185, 232)
+        color = (83, 133, 80)
     else:
         color = (0, 0, 0)
     return color
