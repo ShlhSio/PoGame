@@ -1,6 +1,6 @@
 import random
 from constants import *
-
+import math
 
 def create_world():
     world = []
@@ -69,12 +69,13 @@ class Turret:
         self.index = get_index(self.x, self.y)
         self.radius = [self.x * ROOM_SIZE + ROOM_SIZE/2, self.y * ROOM_SIZE+ ROOM_SIZE/2]
 
-        self.range = [self.index, self.index + 1, self.index + 2, self.index + 3, self.index - 1,
-                      self.index - 2, self.index - 3, self.index - WORLD_HEIGHT, self.index - WORLD_HEIGHT * 2,
-                      self.index - WORLD_HEIGHT * 3,
-                      self.index + WORLD_HEIGHT, self.index + WORLD_HEIGHT * 2, self.index + WORLD_HEIGHT * 3]
-
-
+    def range(self, player):
+        distance = math.sqrt(pow((self.x - player[0]), 2) + pow((self.y - player[1]), 2))
+        if distance < 3:
+            distance = True
+        else:
+            distance = False
+        return distance
 
 
 

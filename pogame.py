@@ -1,6 +1,6 @@
 from screen import *
 import pygame
-import math
+
 
 
 
@@ -102,11 +102,7 @@ def main():
             index = get_index(player[0], player[1])
 
             if invisibility_cloak not in inventory:
-                distance1 = math.sqrt(pow((turret1.x - player[0]), 2) + pow((turret1.y - player[1]), 2))
-                distance2 = math.sqrt(pow((turret2.x - player[0]), 2) + pow((turret2.y - player[1]), 2))
-                distance3 = math.sqrt(pow((turret3.x - player[0]), 2) + pow((turret3.y - player[1]), 2))
-
-                if distance1 < 3 or distance2 < 3 or distance3 < 3:
+                if turret1.range(player) or turret2.range(player) or turret3.range(player):
                     break
             else:
                 pass

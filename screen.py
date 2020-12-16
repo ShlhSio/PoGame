@@ -31,19 +31,19 @@ def update_screen(screen, background, background_change, world, inventory, porta
     background.blit(layer, (0, 0, WORLD_HEIGHT * ROOM_SIZE, WORLD_WIDTH * ROOM_SIZE))
     screen.blit(background, (0, 0))
 
-
     # affichage du portail
     win_x, win_y = portal
     portal = pygame.image.load("images/portal.png")
     portal = pygame.transform.scale(portal, (ROOM_SIZE, ROOM_SIZE))
     screen.blit(portal, (win_x * ROOM_SIZE, win_y * ROOM_SIZE))
+
     # affichage des tours puis de leur portée
     turret = pygame.image.load('images/turret.png')
     turret = pygame.transform.scale(turret, (ROOM_SIZE*3, ROOM_SIZE*3))
 
-    screen.blit(turret, (turret1.x * ROOM_SIZE, turret1.y * ROOM_SIZE))
-    screen.blit(turret, (turret2.x * ROOM_SIZE, turret2.y * ROOM_SIZE))
-    screen.blit(turret, (turret3.x * ROOM_SIZE, turret3.y * ROOM_SIZE))
+    screen.blit(turret, ((turret1.x - 1) * ROOM_SIZE, (turret1.y - 1) * ROOM_SIZE))
+    screen.blit(turret, ((turret2.x - 1) * ROOM_SIZE, (turret2.y - 1) * ROOM_SIZE))
+    screen.blit(turret, ((turret3.x - 1) * ROOM_SIZE, (turret3.y - 1) * ROOM_SIZE))
 
     pygame.draw.circle(screen, (0, 0, 0), (turret1.x * ROOM_SIZE + ROOM_SIZE/2, turret1.y * ROOM_SIZE+ ROOM_SIZE/2),
                        ROOM_SIZE * 3, 2)
