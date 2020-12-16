@@ -2,8 +2,6 @@ from screen import *
 import pygame
 
 
-
-
 def main():
     alive = True
     running = True
@@ -11,7 +9,6 @@ def main():
     background_change = 1
     gold_count = 0
     win_count = 0
-
 
     while alive and running:
         # Création du "monde" tel que nous le définissons
@@ -108,7 +105,6 @@ def main():
                 pass
 
             gold_count = inventory.count("gold")
-
 
             # changement de décor
             if portail in inventory:

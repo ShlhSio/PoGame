@@ -2,6 +2,7 @@ import random
 from constants import *
 import math
 
+
 def create_world():
     world = []
     for y in range(WORLD_WIDTH):
@@ -24,10 +25,6 @@ def create_world():
     world[index_win].clear()
     world[index_win].insert(0, portail)
     portal = [win_x, win_y]
-
-
-
-    # TODO Il faut remplir notre terrain ici, en fonction de la taille choisie préalablement.
 
     return world, portal
 

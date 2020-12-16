@@ -7,6 +7,7 @@ import os
 pygame.init()
 myfont = pygame.font.SysFont('calibri', 20)
 
+
 def create_screen(world):
     # Initialise screen
 
@@ -89,11 +90,11 @@ def update_screen(screen, background, background_change, world, inventory, porta
         x += ITEM_SIZE*3
         rang += 1
 
-    #affichage des pièces d'or
+    # affichage des pièces d'or
     textsurface = myfont.render('You stole a total of ' + str(win_count) + ' /20 gold coins', False, (0, 0, 0))
-    textsurface2 = myfont.render('You have ' + str(5 - background_change) + ' screens left', False, (0, 0, 0))
-    screen.blit(textsurface, (0, WORLD_HEIGHT*ROOM_SIZE+ITEM_SIZE*2/3*8))
-    screen.blit(textsurface2, (WORLD_WIDTH*ROOM_SIZE*0.7, WORLD_HEIGHT * ROOM_SIZE+ITEM_SIZE*5.3))
+    textsurface2 = myfont.render('You have ' + str(5 - background_change) + ' /5 screens left', False, (0, 0, 0))
+    screen.blit(textsurface, (0, WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE * 5.3))
+    screen.blit(textsurface2, (WORLD_WIDTH * ROOM_SIZE * 0.675, WORLD_HEIGHT * ROOM_SIZE + ITEM_SIZE * 5.3))
 
     # affichage du joueur
     player_sprite = pygame.image.load('images/thief.png')
